@@ -2,8 +2,8 @@
 session_start();
 session_destroy();
 session_start();
-
-$koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
+include '../logic/koneksi.php';
+// $koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
 if (!$koneksi) {
   die("Connection failed: " . mysqli_connect_error());
 }
@@ -81,9 +81,15 @@ if (isset($_POST["status"])) {
 
         <div>
           <div class="w-full mb-3">
-            <button class="bg-[#6D90D0] hover:bg-[#6D90D0]/80 rounded-md w-full py-2 text-white margin-auto" type="submit" name="submit">Login<button>
+            <button class="bg-[#6D90D0] hover:bg-[#6D90D0]/80 rounded-md w-full py-2 text-white margin-auto" type="submit" name="submit">Login</button>
           </div>
-          <p class="font-normal text-sm">Silhakan hubungi admin untuk mendaftarkan akun</p>
+          <!-- Info Kredensial -->
+          <div class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-md text-xs text-gray-700">
+            <p class="font-semibold text-blue-900 mb-1">Kredensial Login:</p>
+            <p>Username: <code class="bg-blue-100 px-1 py-0.5 rounded font-mono text-blue-900">user1</code></p>
+            <p>Password: <code class="bg-blue-100 px-1 py-0.5 rounded font-mono text-blue-900">user123</code></p>
+          </div>
+          <p class="font-normal text-sm">Silahkan hubungi admin untuk mendaftarkan akun</p>
         </div>
       </form>
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
-$koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
+include '../logic/koneksi.php';
+// $koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
 if (!$koneksi) {
   die("Connection failed: " . mysqli_connect_error());
 }

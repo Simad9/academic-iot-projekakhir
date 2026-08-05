@@ -1,5 +1,6 @@
 <?php
-$koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
+include '../logic/koneksi.php';
+// $koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
 if (!$koneksi) {
   die("Connection failed: " . mysqli_connect_error());
 }
@@ -65,8 +66,8 @@ $data = mysqli_fetch_array($result);
           Hallo, Selamat Pagi Admin
         </h2>
         <div class="flex gap-3">
-          <img src="../img/icon-setting.svg" alt="" />
-          <img src="../img/icon-notif.svg" alt="" />
+          <img src="../img/icon-setting.svg" alt="" onclick="alert('Fitur ini masih dalam pengembangan')" class="cursor-pointer"/>
+          <img src="../img/icon-notif.svg" alt="" onclick="alert('Fitur ini masih dalam pengembangan')" class="cursor-pointer"/>
           <div class="flex gap-2 items-center">
             <img
               src="../img/kucing.jpeg"
@@ -139,7 +140,7 @@ $data = mysqli_fetch_array($result);
             </div>
           </div>
           <div class="flex justify-end">
-            <button class="bg-biru text-putih px-5 py-2 rounded-lg">
+            <button class="bg-biru text-putih px-5 py-2 rounded-lg" onclick="alert('Fitur ini masih dalam pengembangan')">
               Lihat Detail
             </button>
           </div>
@@ -156,7 +157,7 @@ $data = mysqli_fetch_array($result);
             </div>
           </div>
           <div class="flex justify-end">
-            <button class="bg-biru text-putih px-5 py-2 rounded-lg">
+            <button class="bg-biru text-putih px-5 py-2 rounded-lg" onclick="alert('Fitur ini masih dalam pengembangan')">
               Lihat Detail
             </button>
           </div>
@@ -229,9 +230,21 @@ $data = mysqli_fetch_array($result);
     let slot = document.getElementById("slot");
     let styleSlot = document.getElementById("styleSlot");
     let lastTotal = -1;
+    let pollController = null;
+
+    window.addEventListener('beforeunload', () => {
+      if (pollController) {
+        pollController.abort();
+      }
+    });
 
     function checkSlots() {
-      fetch(`long_poll.php?last_total=${lastTotal}`)
+      if (pollController) {
+        pollController.abort();
+      }
+      pollController = new AbortController();
+
+      fetch(`long_poll.php?last_total=${lastTotal}`, { signal: pollController.signal })
         .then(response => response.json())
         .then(data => {
           if (data.total !== undefined) {
@@ -242,8 +255,10 @@ $data = mysqli_fetch_array($result);
           checkSlots(); // Lanjutkan polling
         })
         .catch(err => {
-          console.error('Error:', err);
-          setTimeout(checkSlots, 5000); // Coba lagi setelah 5 detik jika ada error
+          if (err.name !== 'AbortError') {
+            console.error('Error:', err);
+            setTimeout(checkSlots, 5000); // Coba lagi setelah 5 detik jika ada error biasa
+          }
         });
     }
     checkSlots(); // Mulai polling

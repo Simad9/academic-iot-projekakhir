@@ -11,7 +11,7 @@ $database  = "projek_akhir_iot";
 $koneksi  = new mysqli($hostname, $username, $password, $database); //query koneksi
 
 if ($koneksi->connect_error) { //cek error
-  die("Error: " . $connect->connect_error);
+  die("Error: " . $koneksi->connect_error);
 }
 
 // Set timezone, biar pas di add ngikutin timezone jakarta

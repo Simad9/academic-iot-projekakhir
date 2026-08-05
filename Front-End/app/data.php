@@ -1,5 +1,6 @@
 <?php
-$koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
+include '../logic/koneksi.php';
+// $koneksi = mysqli_connect("localhost", "root", "", "projek_akhir_iot");
 if (!$koneksi) {
   die("Connection failed: " . mysqli_connect_error());
 }
@@ -100,16 +101,16 @@ $hasil = mysqli_query($koneksi, $query);
       </div>
 
       <!-- Main Feature -->
-      <div class="flex gap-[20px]">
+      <div class="flex gap-[20px] h-full">
         <!-- Table -->
-        <div class="w-full bg-putih border rounded-[20px] shadow-xl p-5">
+        <div class="w-full bg-putih border rounded-[20px] shadow-xl p-5 flex flex-col">
           <div class="ps-3 mb-3">
             <h2 class="text-2xl font-semibold">TABEL DATA</h2>
           </div>
 
           <!-- Scrollable Table -->
           <div
-            class="relative overflow-x-auto rounded-[20px] border border-biru h-[510px] overflow-y-auto">
+            class="relative overflow-x-auto rounded-[20px] border border-biru flex-1 overflow-y-auto">
             <table class="w-full text-sm text-left">
               <thead class="text-xs text-gray-700 uppercase bg-gray-300">
                 <tr>
